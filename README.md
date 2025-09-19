@@ -1,27 +1,33 @@
 # AHK_Keyboard_Extended_Layer
 
-*Extend your keyboard with home-row navigation and KDE-style window management.*
+Extend keyboard layer with windows manipulation.
 
-## Features
+## Goal
+The goal of this script is to easily access arrow keys and move/resize windows:
+- Remap the arrow keys to keyboard letters for better accessibility.
+  - Disable permanently CapsLock.
+  - Use CapsLock for accessing Up, Down, Left, Right, Home and End keys.
+- Allow quick window move and resizing.
 
-### Keyboard Remapping
-- **CapsLock is permanently disabled** and repurposed as a modifier key.
-- **Arrow keys on home row** for faster access:
-  - `CapsLock + i` → Up Arrow  
-  - `CapsLock + k` → Down Arrow  
-  - `CapsLock + j` → Left Arrow  
-  - `CapsLock + l` → Right Arrow  
-- Extra keys:  
-  - `CapsLock + u` → Home  
-  - `CapsLock + o` → End  
-  - `CapsLock + p` → Backspace  
-  - `CapsLock + ;` → Delete  
+## References
+- Remap part code is based on the ["Worly script"](https://www.autohotkey.com/boards/viewtopic.php?t=67202).
+- Layers from [Colemak Extend](https://colemakmods.github.io/ergonomic-mods/extend.html).
+- Windows manipulation code is based on [Easy Window Dragging (KDE style)](https://www.autohotkey.com/docs/v2/scripts/index.htm#EasyWindowDrag_(KDE)).
 
-Modifier keys (`Shift`, `Ctrl`, `Alt`) are preserved when combined.
+## Shortcuts
+- **Up Arrow** → CapsLock + i  
+- **Down Arrow** → CapsLock + k  
+- **Left Arrow** → CapsLock + j  
+- **Right Arrow** → CapsLock + l  
+- **Home** → CapsLock + u  
+- **End** → CapsLock + o  
+- **Backspace** → CapsLock + p  
+- **Delete** → CapsLock + ;  
 
-### Window Management
-- **Move windows**: `Win + Left Mouse Drag`
-- **Resize windows**: `Win + Right Mouse Drag`
+## Window Management
+- **Move window**: Win key + Left click drag  
+- **Resize window**: Win key + Right click drag  
+
 
 ## Installation
 
@@ -31,31 +37,3 @@ Modifier keys (`Shift`, `Ctrl`, `Alt`) are preserved when combined.
 4. To start it automatically with Windows:
    - Press `Win + R`, type `shell:startup`, and press Enter.
    - Place a shortcut of the script file in the opened folder.
-
-## Customization
-
-You can edit the script to fit your needs:
-
-- **Change the modifier key**:  
-  By default, `CapsLock` is used. You can replace it in the *key mapping* section, for example:  
-  ```ahk
-  CapsLock & i::MoveCursor("Up")
-→ Replace CapsLock with another key (e.g., RAlt, RCtrl).
-
-Change the mapped keys:
-Modify the letters used to trigger arrow keys and other functions. Example:
-
-ahk
-Copier le code
-CapsLock & h::MoveCursor("Left")
-Add or remove mappings:
-Follow the same format to create additional combinations for other keys (see AutoHotkey key list).
-
-Adjust window move/resize behavior:
-The LWin & LButton and LWin & RButton hotkeys control window dragging and resizing.
-You can assign them to different modifier keys if needed.
-
-References
-Based on the Worly script and Colemak Extend layers.
-
-Window management adapted from Easy Window Dragging (KDE style).

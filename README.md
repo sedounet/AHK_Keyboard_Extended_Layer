@@ -1,39 +1,55 @@
-# AHK_Keyboard_Extended_Layer
+# Extend Keyboard Layer with Windows Manipulation
 
-Extend keyboard layer with windows manipulation.
+This **AutoHotkey v2** script improves keyboard accessibility and makes window management easier.
 
-## Goal
-The goal of this script is to easily access arrow keys and move/resize windows:
-- Remap the arrow keys to keyboard letters for better accessibility.
-  - Disable permanently CapsLock.
-  - Use CapsLock for accessing Up, Down, Left, Right, Home and End keys.
-- Allow quick window move and resizing.
+---
+
+## Features
+
+### Keyboard remapping
+- **CapsLock permanently disabled**.
+- Use **CapsLock as a modifier key** to access arrow keys and specials.
+
+Default shortcuts:
+
+| Shortcut            | Action         |
+|---------------------|----------------|
+| CapsLock + **i**    | Arrow ↑        |
+| CapsLock + **k**    | Arrow ↓        |
+| CapsLock + **j**    | Arrow ←        |
+| CapsLock + **l**    | Arrow →        |
+| CapsLock + **u**    | Home           |
+| CapsLock + **o**    | End            |
+| CapsLock + **p**    | Backspace      |
+| CapsLock + **;**    | Delete         |
+
+Combinations with **Shift / Ctrl / Alt** are supported (example: `CapsLock + Ctrl + i` ⇒ `Ctrl + ↑`).
+
+---
+
+### Window manipulation
+- **Win + left click drag** → move active window (KDE style).  
+- **Win + right click drag** → resize active window.  
+
+If the window is maximized, left drag with Win will restore it automatically before moving.
+
+---
 
 ## References
-- Remap part code is based on the ["Worly script"](https://www.autohotkey.com/boards/viewtopic.php?t=67202).
-- Layers from [Colemak Extend](https://colemakmods.github.io/ergonomic-mods/extend.html).
-- Windows manipulation code is based on [Easy Window Dragging (KDE style)](https://www.autohotkey.com/docs/v2/scripts/index.htm#EasyWindowDrag_(KDE)).
+- [Worly script (remap)](https://www.autohotkey.com/boards/viewtopic.php?t=67202)  
+- [Colemak Extend layers](https://colemakmods.github.io/ergonomic-mods/extend.html)  
+- [Easy Window Dragging (KDE style)](https://www.autohotkey.com/docs/v2/scripts/index.htm#EasyWindowDrag_(KDE))  
 
-## Shortcuts
-- **Up Arrow** → CapsLock + i  
-- **Down Arrow** → CapsLock + k  
-- **Left Arrow** → CapsLock + j  
-- **Right Arrow** → CapsLock + l  
-- **Home** → CapsLock + u  
-- **End** → CapsLock + o  
-- **Backspace** → CapsLock + p  
-- **Delete** → CapsLock + ;  
+---
 
-## Window Management
-- **Move window**: Win key + Left click drag  
-- **Resize window**: Win key + Right click drag  
+## Installation & usage
+1. Install **[AutoHotkey v2](https://www.autohotkey.com/)** (64-bit recommended).  
+2. Save this script as `extend-layer.ahk`.  
+3. Double-click the file to run it.  
+4. The script runs in the background (tray icon). Exit from tray menu when not needed.  
 
+---
 
-## Installation
-
-1. Install [AutoHotkey v2 (64-bit)](https://www.autohotkey.com/download/).
-2. Download this repository or copy the script file (`.ahk`) to your computer.
-3. Double-click the script file to run it.
-4. To start it automatically with Windows:
-   - Press `Win + R`, type `shell:startup`, and press Enter.
-   - Place a shortcut of the script file in the opened folder.
+## Notes
+- Written for **AutoHotkey v2.0+ 64-bit**.  
+- Extra key scancodes can be found [here](https://forum.colemak.com/topic/1467-dreymars-big-bag-of-keyboard-tricks-pklwindows-edition/p5/).

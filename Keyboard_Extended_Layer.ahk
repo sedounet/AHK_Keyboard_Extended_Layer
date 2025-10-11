@@ -163,6 +163,33 @@ LWin & RButton:: {
     }
     return
 }
+LWin & MButton:: {
+    MouseGetPos(, , &hwnd)
+    if !IsWindowEligible(hwnd)
+        return
+
+    ; Détecte l'état TopMost (heuristique) et inverse
+    isTop := false
+    try {
+        ex := DllCall("GetWindowLongPtr", "Ptr", hwnd, "Int", -20, "Ptr")
+        isTop := (ex & 0x8) ? true : false
+    } catch {
+        isTop := false
+    }
+
+    ; Appliquer / retirer TOPMOST
+    hInsert := isTop ? -2 : -1  ; HWND_NOTOPMOST / HWND_TOPMOST
+    SWP_NOSIZE := 0x1
+    SWP_NOMOVE := 0x2
+    SWP_NOACTIVATE := 0x10
+    flags := SWP_NOSIZE | SWP_NOMOVE | SWP_NOACTIVATE
+    try {
+        DllCall("SetWindowPos", "Ptr", hwnd, "Ptr", hInsert, "Int", 0, "Int", 0, "Int", 0, "Int", 0, "UInt", flags)
+    } catch {
+        ; Exception ignored
+    }
+    return
+}
 
 IsWindowEligible(hwnd) {
     if !hwnd

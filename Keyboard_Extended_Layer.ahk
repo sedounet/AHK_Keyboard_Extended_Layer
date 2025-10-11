@@ -84,16 +84,9 @@ CapsLock & p::MoveCursor("Backspace")
 CapsLock & SC027::MoveCursor("Del") ; the "sc027" code replace the semicolon in key mapping 
     ; a list of keys can be fount at https://forum.colemak.com/topic/1467-dreymars-big-bag-of-keyboard-tricks-pklwindows-edition/p5/
 
-
-
-
-
 SetWinDelay(2)
 CoordMode("Mouse")
 return
-
-
-
 
 ; Mouse Gesture
 ; --------------------------------------------------
@@ -164,6 +157,51 @@ LWin & RButton:: {
         WinMove(KDE_WinX1 + (KDE_WinLeft + 1) / 2 * KDE_X2, KDE_WinY1 + (KDE_WinUp + 1) / 2 * KDE_Y2, KDE_WinW - KDE_WinLeft * KDE_X2, KDE_WinH - KDE_WinUp * KDE_Y2, "ahk_id " KDE_id)  ; X of resized window
         KDE_X1 := (KDE_X2 + KDE_X1) ; Reset the initial position for the next iteration.
         KDE_Y1 := (KDE_Y2 + KDE_Y1)
+    }
+    return
+}
+LWin & MButton:: {
+    MouseGetPos(&origX, &origY, &hwnd)
+    if !hwnd
+        return
+
+    ; Récupère la position de la fenêtre
+    WinGetPos(&winX, &winY, &winW, &winH, "ahk_id " hwnd)
+
+    ; Calcule une position fiable sur la barre de titre (centre horizontal, 10px sous le haut)
+    titleBarX := winX + winW // 2
+    titleBarY := winY + 10
+
+    ; Déplace la souris sur la barre de titre
+    MouseMove(titleBarX, titleBarY, 0)
+    Sleep(50)
+
+    ; Simule un clic gauche
+    Send("{LButton down}")
+    Sleep(50)
+    Send("{LButton up}")
+    Sleep(50)
+
+    ; Remet la souris à sa position initiale
+    MouseMove(origX, origY, 0)
+
+    ; Bascule Always on Top
+    isTop := false
+    try {
+        ex := DllCall("GetWindowLongPtr", "Ptr", hwnd, "Int", -20, "Ptr")
+        isTop := (ex & 0x8) ? true : false
+    } catch {
+        isTop := false
+    }
+
+    hInsert := isTop ? -2 : -1  ; HWND_NOTOPMOST / HWND_TOPMOST
+    SWP_NOSIZE := 0x1
+    SWP_NOMOVE := 0x2
+    SWP_NOACTIVATE := 0x10
+    flags := SWP_NOSIZE | SWP_NOMOVE | SWP_NOACTIVATE
+    try {
+        DllCall("SetWindowPos", "Ptr", hwnd, "Ptr", hInsert, "Int", 0, "Int", 0, "Int", 0, "Int", 0, "UInt", flags)
+    } catch {
     }
     return
 }

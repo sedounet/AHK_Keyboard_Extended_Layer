@@ -28,10 +28,17 @@ Combinations with **Shift / Ctrl / Alt** are supported (example: `CapsLock + Ctr
 ---
 
 ### Window manipulation
-- **Win + left click drag** → move active window (KDE style).  
-- **Win + right click drag** → resize active window.  
+- **Win + left click drag** → move any window from anywhere inside it.  
+  - The script simulates a native title bar drag, so the Windows snap UX (bar/preview) is triggered at screen edges and corners.
+- **Win + right click drag** → resize active window from any edge or corner.
 
 If the window is maximized, left drag with Win will restore it automatically before moving.
+
+---
+
+## Snap UX (Windows native)
+- When moving a window with **Win + left click drag**, during movement, the mouse cursor is automatically moved to the window's title bar (if compatible) to ensure the Windows Snap UX is triggered.
+- Multi-monitor setups are supported: snapping works on the monitor where the window is released.
 
 ---
 
@@ -44,7 +51,7 @@ If the window is maximized, left drag with Win will restore it automatically bef
 
 ## Installation & usage
 1. Install **[AutoHotkey v2](https://www.autohotkey.com/)** (64-bit recommended).  
-2. Save this script as `extend-layer.ahk`.  
+2. Save this script as `Keyboard_Extended_Layer.ahk`.  
 3. Double-click the file to run it.  
 4. The script runs in the background (tray icon). Exit from tray menu when not needed.  
 
@@ -52,4 +59,4 @@ If the window is maximized, left drag with Win will restore it automatically bef
 
 ## Notes
 - Written for **AutoHotkey v2.0+ 64-bit**.  
-- Extra key scancodes can be found [here](https://forum.colemak.com/topic/1467-dreymars-big-bag-of-keyboard-tricks-pklwindows-edition/p5/).
+- The script is minimal and focused on ergonomic window management and keyboard navigation.

@@ -97,36 +97,32 @@ return
 
 ; Mouse Gesture
 ; --------------------------------------------------
-LWin & LButton:: {
-    MouseGetPos(, , &KDE_id) ; Get the window id
-    ; Abort if it's the desktop.
-    ClassWin := WinGetClass("ahk_id " KDE_id)
-    if (ClassWin = "WorkerW")
+LWin & LButton::
+{
+    MouseGetPos(&startX, &startY, &hwnd)
+    if !IsWindowEligible(hwnd)
         return
-    ; If the window is maximized, restore the initial position
-    ; and size of the window and center the mouse.
-    KDE_Win := WinGetMinMax("ahk_id " KDE_id)
-    If KDE_Win {
-        WinRestore("ahk_id " KDE_id)
-        WinGetPos(&KDE_WinX1, &KDE_WinY1, &KDE_WinW, &KDE_WinH, "ahk_id " KDE_id)
-        MouseMove((KDE_WinX1 + (KDE_WinW / 2)), (KDE_WinY1 + (KDE_WinH / 2)), 0)
+
+    ; restaurer si maximisée
+    if WinGetMinMax("ahk_id " hwnd) = 1
+        WinRestore("ahk_id " hwnd)
+
+    ; Simuler un clic sur la barre de titre pour déclencher le snap natif
+    WinGetPos(&wx, &wy, &ww, &wh, "ahk_id " hwnd)
+    titleBarY := wy + 10  ; Ajuster selon la hauteur de la barre de titre
+    MouseMove(wx + ww / 2, titleBarY, 0)  ; Déplacer la souris au centre de la barre de titre
+    Sleep(50)
+    Send("{LButton down}")  ; Simuler clic gauche
+    Sleep(50)
+
+    ; Déplacer la fenêtre en suivant la souris
+    while GetKeyState("LButton", "P") {
+        MouseGetPos(&cx, &cy)
+        MouseMove(cx, cy, 0)  ; Déplacer la souris
+        Sleep(10)
     }
 
-    ; Move the window.
-    MouseGetPos(&KDE_X1, &KDE_Y1)
-    WinGetPos(&KDE_WinX1, &KDE_WinY1, , , "ahk_id " KDE_id)
-    Loop {
-        KDE_Button := GetKeyState("LButton", "P") ? "D" : "U" ; Break if button has been released.
-        if (KDE_Button = "U")
-            break
-        MouseGetPos(&KDE_X2, &KDE_Y2) ; Get the current mouse position.
-        KDE_X2 -= KDE_X1 ; Obtain an offset from the initial mouse position.
-        KDE_Y2 -= KDE_Y1
-        KDE_WinX2 := (KDE_WinX1 + KDE_X2) ; Apply this offset to the window position.
-        KDE_WinY2 := (KDE_WinY1 + KDE_Y2)
-        WinMove(KDE_WinX2, KDE_WinY2, , , "ahk_id " KDE_id) ; Move the window to the new position.
-    }
-    return
+    Send("{LButton up}")  ; Relâcher le clic gauche
 }
 LWin & RButton:: {
     ; Get the mouse position and window id,
@@ -166,4 +162,13 @@ LWin & RButton:: {
         KDE_Y1 := (KDE_Y2 + KDE_Y1)
     }
     return
+}
+
+IsWindowEligible(hwnd) {
+    if !hwnd
+        return false
+    class := WinGetClass("ahk_id " hwnd)
+    if (class = "WorkerW" || class = "Progman")
+        return false
+    return true
 }

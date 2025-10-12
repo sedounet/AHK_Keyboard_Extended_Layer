@@ -29,7 +29,8 @@ Combinations with **Shift / Ctrl / Alt** are supported (example: `CapsLock + Ctr
 
 ### Window manipulation
 - **Win + left click drag** → move active window (KDE style).  
-- **Win + right click drag** → resize active window.  
+- **Win + right click drag** → resize active window.
+- **Win + middle click (wheel)** => stick windows on top
 
 If the window is maximized, left drag with Win will restore it automatically before moving.
 
